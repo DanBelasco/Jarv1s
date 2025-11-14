@@ -1,0 +1,75 @@
+version: "3.9"
+
+services:
+  jarv1s-api:
+    container_name: jarv1s-api
+    build: ./jarv1s-api
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=jarv1s
+      - DB_PASS=jarv1s123
+      - DB_NAME=jarv1s
+      - MQTT_HOST=mosquitto
+    depends_on:
+      - db
+      - mosquitto
+    networks:
+      - jarv1s-net
+
+  db:
+    container_name: jarv1s-db
+    image: postgres:16
+    restart: always
+    environment:
+      - POSTGRES_USER=jarv1s
+      - POSTGRES_PASSWORD=jarv1s123
+      - POSTGRES_DB=jarv1s
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - jarv1s-net
+
+  mosquitto:
+    container_name: jarv1s-mqtt
+    image: eclipse-mosquitto:2
+    restart: always
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_config:/mosquitto/config
+    networks:
+      - jarv1s-net
+
+  jarv1s-voice:
+    container_name: jarv1s-voice
+    build: ./jarv1s-voice
+    restart: always
+    depends_on:
+      - jarv1s-api
+    networks:
+      - jarv1s-net
+
+  jarv1s-dashboard:
+    container_name: jarv1s-dashboard
+    build: ./jarv1s-dashboard
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - jarv1s-api
+    networks:
+      - jarv1s-net
+
+networks:
+  jarv1s-net:
+    driver: bridge
+
+volumes:
+  db_data:
+  mosquitto_data:
+  mosquitto_config:
