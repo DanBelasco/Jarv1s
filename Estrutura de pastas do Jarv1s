@@ -1,0 +1,69 @@
+# Estrutura de Pastas Projeto Jarv1s
+
+```
+jarv1s/
+│
+├── docker-compose.yml
+├── README.md
+│
+├── jarv1s-api/
+│   ├── Dockerfile
+│   ├── app/
+│   │   ├── main.py
+│   │   ├── routers/
+│   │   │   ├── __init__.py
+│   │   │   ├── system.py
+│   │   │   ├── devices.py
+│   │   │   └── voice.py
+│   │   ├── core/
+│   │   │   ├── config.py
+│   │   │   ├── security.py
+│   │   │   └── events.py
+│   │   ├── models/
+│   │   │   ├── __init__.py
+│   │   │   ├── user.py
+│   │   │   └── device.py
+│   │   ├── schemas/
+│   │   │   ├── __init__.py
+│   │   │   ├── user.py
+│   │   │   └── device.py
+│   │   ├── services/
+│   │   │   ├── mqtt_service.py
+│   │   │   └── db_service.py
+│   │   └── utils/
+│   │       └── helpers.py
+│   └── requirements.txt
+│
+├── jarv1s-voice/
+│   ├── Dockerfile
+│   ├── app/
+│   │   ├── main.py
+│   │   ├── stt/
+│   │   │   └── placeholder.py
+│   │   ├── tts/
+│   │   │   └── placeholder.py
+│   │   └── nlu/
+│   │       └── placeholder.py
+│   └── requirements.txt
+│
+├── jarv1s-dashboard/
+│   ├── Dockerfile
+│   ├── src/
+│   │   ├── App.jsx
+│   │   ├── components/
+│   │   │   ├── StatusCard.jsx
+│   │   │   ├── SensorList.jsx
+│   │   │   └── Menu.jsx
+│   │   ├── pages/
+│   │   │   ├── Home.jsx
+│   │   │   └── Settings.jsx
+│   │   └── assets/
+│   └── package.json
+│
+├── mosquitto/
+│   ├── config/
+│   │   └── mosquitto.conf
+│   └── data/  (volume)
+│
+└── db/ (volume persistido pelo compose)
+```
